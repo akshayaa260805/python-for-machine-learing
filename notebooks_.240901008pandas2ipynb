@@ -1,0 +1,115 @@
+{
+  "metadata": {
+    "kernelspec": {
+      "name": "python",
+      "display_name": "Python (Pyodide)",
+      "language": "python"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "python",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.8"
+    }
+  },
+  "nbformat_minor": 5,
+  "nbformat": 4,
+  "cells": [
+    {
+      "id": "92d5c4aa-211f-483a-b206-1a6e9cb282cf",
+      "cell_type": "code",
+      "source": "import pandas as pd\nimport numpy as np\n#DataFrame.Apply function\nprint(\"DataFrame.applyfunction:\\n\")\ninfo=pd.DataFrame([[2,7]]*3,columns=['P','Q'])\nprint(\"\\nOriginal DataFrame:\\n\",info)\nprint(\"\\nSquare root of DataFrame:\\n\",info.apply(np.sqrt))\nprint(\"\\nSum of each column:\\n\",info.apply(np.sum,axis=0))\nprint(\"\\nSum of each row:\\n\",info.apply(np.sum,axis=1))      ",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "DataFrame.applyfunction:\n\n\nOriginal DataFrame:\n    P  Q\n0  2  7\n1  2  7\n2  2  7\n\nSquare root of DataFrame:\n           P         Q\n0  1.414214  2.645751\n1  1.414214  2.645751\n2  1.414214  2.645751\n\nSum of each column:\n P     6\nQ    21\ndtype: int64\n\nSum of each row:\n 0    9\n1    9\n2    9\ndtype: int64\n"
+        }
+      ],
+      "execution_count": 2
+    },
+    {
+      "id": "5faeab83-5eb5-4f8b-9acc-dc780a3c4d7d",
+      "cell_type": "code",
+      "source": "info=pd.DataFrame([[1,5,7],[2,7,8],[3,6,9]],columns=['X','Y','Z'])\nprint(\"\\nOriginal DataFrame:\\n\",info)\nprint(\"\\nMinimum and Maximum of each column:\\n\")\nprint(info.agg(['min','max']))",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "\nOriginal DataFrame:\n    X  Y  Z\n0  1  5  7\n1  2  7  8\n2  3  6  9\n\nMinimum and Maximum of each column:\n\n     X  Y  Z\nmin  1  5  7\nmax  3  7  9\n"
+        }
+      ],
+      "execution_count": 3
+    },
+    {
+      "id": "436d94d8-1b6a-4ee9-9d98-b18e62534476",
+      "cell_type": "code",
+      "source": "#DataFrame.Assifn function\nprint(\"\\nDataFrame.Assign function:\\n\")\nd2=pd.DataFrame([['Dale',123],['Mark',143]],columns=['Emp','ID'])\nprint(\"\\nOriginal DataFrame:\\n\",d2)\nd2['Age']=[35,40]\nprint(\"\\nAdding new column:\\n\",d2)\nd=d2.assign(sex=['Male','Male'])\nprint(\"\\nAdding new column:\\n\",d)",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "\nDataFrame.Assign function:\n\n\nOriginal DataFrame:\n     Emp   ID\n0  Dale  123\n1  Mark  143\n\nAdding new column:\n     Emp   ID  Age\n0  Dale  123   35\n1  Mark  143   40\n\nAdding new column:\n     Emp   ID  Age   sex\n0  Dale  123   35  Male\n1  Mark  143   40  Male\n"
+        }
+      ],
+      "execution_count": 6
+    },
+    {
+      "id": "121e62f3-b3a2-49bb-a58a-2c6f0eadeebc",
+      "cell_type": "code",
+      "source": "#DataFrame.sort function\nprint(\"\\nDataFrame.sortfunction:\\n\")\ninfo=pd.DataFrame(np.random.randn(5,2),index=[3,2,0,4,1],columns=['col3','col4'])\nprint(info)\ninfo2=info.sort_index()\nprint(\"\\nSort index:\\n\",info2)\ninfo3=info.sort_values(by='col3')\nprint(\"\\nsort values:\\n\",info3)",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "\nDataFrame.sortfunction:\n\n       col3      col4\n3  0.453735  0.163423\n2 -1.145204 -0.128363\n0  0.114024 -1.201343\n4  1.198732  1.521550\n1  1.406476  0.932616\n\nSort index:\n        col3      col4\n0  0.114024 -1.201343\n1  1.406476  0.932616\n2 -1.145204 -0.128363\n3  0.453735  0.163423\n4  1.198732  1.521550\n\nsort values:\n        col3      col4\n2 -1.145204 -0.128363\n0  0.114024 -1.201343\n3  0.453735  0.163423\n4  1.198732  1.521550\n1  1.406476  0.932616\n"
+        }
+      ],
+      "execution_count": 7
+    },
+    {
+      "id": "a0fb8f67-7050-4039-b650-7be5ba82d4cc",
+      "cell_type": "code",
+      "source": "#DataFrame.Merge function\nprint(\"\\nDataFrame.Merge function:\\n\")\nleft=pd.DataFrame({'id':[1,2,3,4,5],'Name':['Alex','Amy','Allen','Alice','Ayoung'],\n'sub':['sub1','sub2','sub4','sub6','sub5']})\nright=pd.DataFrame({'id':[1,2,3,4,5],'Name':['Billy','Brain','Bran','Bryce','Betty'],\n'sub':['sub2','sub4','sub3','sub6','sub5']})\nprint(left)\nprint(right)\nprint(pd.merge(left,right,on='id'))",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "\nDataFrame.Merge function:\n\n   id    Name   sub\n0   1    Alex  sub1\n1   2     Amy  sub2\n2   3   Allen  sub4\n3   4   Alice  sub6\n4   5  Ayoung  sub5\n   id   Name   sub\n0   1  Billy  sub2\n1   2  Brain  sub4\n2   3   Bran  sub3\n3   4  Bryce  sub6\n4   5  Betty  sub5\n   id  Name_x sub_x Name_y sub_y\n0   1    Alex  sub1  Billy  sub2\n1   2     Amy  sub2  Brain  sub4\n2   3   Allen  sub4   Bran  sub3\n3   4   Alice  sub6  Bryce  sub6\n4   5  Ayoung  sub5  Betty  sub5\n"
+        }
+      ],
+      "execution_count": 9
+    },
+    {
+      "id": "6d5fd632-14f9-4c42-b816-68831ba05e8c",
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    }
+  ]
+}
